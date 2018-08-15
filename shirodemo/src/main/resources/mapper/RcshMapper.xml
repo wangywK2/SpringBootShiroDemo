@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.shirodemo.dao.RcshMapper" >
+  <resultMap id="BaseResultMap" type="com.example.shirodemo.entity.Rcsh" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sm" property="sm" jdbcType="VARCHAR" />
+    <result column="monery" property="monery" jdbcType="DOUBLE" />
+    <result column="xfsj" property="xfsj" jdbcType="TIMESTAMP" />
+    <result column="founder" property="founder" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from weixun_rcsh
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.shirodemo.entity.Rcsh" >
+    insert into weixun_rcsh (sm, monery,
+      xfsj, founder, createtime
+      )
+    values (#{sm,jdbcType=VARCHAR}, #{monery,jdbcType=DOUBLE},
+      #{xfsj,jdbcType=TIMESTAMP}, #{founder,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.shirodemo.entity.Rcsh" >
+    update weixun_rcsh
+    set sm = #{sm,jdbcType=VARCHAR},
+      monery = #{monery,jdbcType=DOUBLE},
+      xfsj = #{xfsj,jdbcType=TIMESTAMP},
+      founder = #{founder,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, sm, monery, xfsj, founder, createtime
+    from weixun_rcsh
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, sm, monery, xfsj, founder, createtime
+    from weixun_rcsh
+  </select>
+</mapper>

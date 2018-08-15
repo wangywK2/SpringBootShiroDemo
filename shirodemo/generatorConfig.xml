@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="MysqlContext" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <commentGenerator>
+            <!--阻止生成注解-->
+            <property name="suppressAllComments" value="true"/>
+            <!--阻止注解生成时间戳-->
+            <!--<property name="suppressDate" value="true"/>-->
+        </commentGenerator>
+        <!--plugin 标签:使用插件来扩展或者修改MYBATIS生成的代码；可以不配置，配置的数量不限-->
+        <!--<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.imooc.utils.MyMapper"/>
+        </plugin>-->
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/weixun"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <!-- 对于生成的pojo所在包 -->
+        <!--<javaModelGenerator targetPackage="com.example.demo.entity" targetProject="src/main/java"/>-->
+        <javaModelGenerator targetPackage="com.example.shirodemo.entity" targetProject="src/main/java"/>
+		<!-- 对于生成的mapper所在目录 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+
+		<!-- 配置mapper对应的java映射 -->
+        <javaClientGenerator targetPackage="com.example.shirodemo.dao" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <!--tableName:表名，domainObjectName ：映射实体类的名称-->
+		<!--<table tableName="weixun_user" domainObjectName="User"></table>-->
+        <!--<table tableName="weixun_role" domainObjectName="Role"></table>-->
+        <!--<table tableName="weixun_auth" domainObjectName="Auth"></table>-->
+        <!--<table tableName="weixun_commodity" domainObjectName="Commodity"></table>-->
+         <!--<! <  table tableName="weixun_logger" domainObjectName="WeixunLogger"></table>-->
+        <!--<table tableName="weixun_supplier" domainObjectName="Supplier"></table>-->
+        <!--<table tableName="region" domainObjectName="Region"></table>&ndash;&gt;-->
+        <!--<table tableName="weixun_supplier" domainObjectName="SupplierTest"></table>-->
+
+
+
+        <table tableName="weixun_rcsh" domainObjectName="Rcsh"></table>
+        <table tableName="weixun_rcsh_money" domainObjectName="RcshMoney"></table>
+
+    </context>
+</generatorConfiguration>

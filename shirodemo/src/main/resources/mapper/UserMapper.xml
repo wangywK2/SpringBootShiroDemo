@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.shirodemo.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.example.shirodemo.entity.User" >
+    <id column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="jobNumber" property="jobnumber" jdbcType="VARCHAR" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="realName" property="realname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="entryTime" property="entrytime" jdbcType="DATE" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="nation" property="nation" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="identity" property="identity" jdbcType="VARCHAR" />
+    <result column="dimissiomTime" property="dimissiomtime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="createUserId" property="createuserid" jdbcType="INTEGER" />
+    <result column="modifyTime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="modifyUserId" property="modifyuserid" jdbcType="INTEGER" />
+    <result column="userType" property="usertype" jdbcType="INTEGER" />
+    <result column="salary" property="salary" jdbcType="INTEGER" />
+  </resultMap>
+
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from weixun_user
+    where userId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.shirodemo.entity.User" >
+    insert into weixun_user (jobNumber, userName,
+      realName, password, birthday, 
+      age, entryTime, address,
+      phone, nation, email, 
+      identity, dimissiomTime, createTime, 
+      createUserId, modifyTime, modifyUserId, 
+      userType,salary)
+    values (#{jobnumber,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+      #{realname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{age,jdbcType=INTEGER}, #{entrytime,jdbcType=DATE}, #{address,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{identity,jdbcType=VARCHAR}, #{dimissiomtime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{createuserid,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, #{modifyuserid,jdbcType=INTEGER}, 
+      #{usertype,jdbcType=INTEGER},#{salary,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.example.shirodemo.entity.User" >
+    update weixun_user
+    set jobNumber = #{jobnumber,jdbcType=VARCHAR},
+      userName = #{username,jdbcType=VARCHAR},
+      realName = #{realname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      age = #{age,jdbcType=INTEGER},
+      entryTime = #{entrytime,jdbcType=DATE},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      nation = #{nation,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      identity = #{identity,jdbcType=VARCHAR},
+      dimissiomTime = #{dimissiomtime,jdbcType=TIMESTAMP},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      createUserId = #{createuserid,jdbcType=INTEGER},
+      modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      modifyUserId = #{modifyuserid,jdbcType=INTEGER},
+      userType = #{usertype,jdbcType=INTEGER},
+      salary = #{salary,jdbcType=INTEGER}
+    where userId = #{userid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select userId, jobNumber, userName, realName, password, birthday, TIMESTAMPDIFF(YEAR,birthday,NOW()) age, entryTime,
+    address, phone, nation, email, identity, dimissiomTime, createTime, createUserId, 
+    modifyTime, modifyUserId, userType,salary
+    from weixun_user
+    where userId = #{userid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select userId, jobNumber, userName, realName, password, birthday, TIMESTAMPDIFF(YEAR,birthday,NOW()) age, entryTime,
+    address, phone, nation, email, identity, dimissiomTime, createTime, createUserId, 
+    modifyTime, modifyUserId, userType,salary
+    from weixun_user
+  </select>
+
+  <select id="selectUserByUsername" resultMap="BaseResultMap">
+    select userId, jobNumber, userName, realName, password, birthday, TIMESTAMPDIFF(YEAR,birthday,NOW()) age, entryTime,
+    address, phone, nation, email, identity, dimissiomTime, createTime, createUserId,
+    modifyTime, modifyUserId, userType,salary
+    from weixun_user where userName = #{username,jdbcType=VARCHAR}
+
+  </select>
+  <select id="selectUserByParam" resultMap="BaseResultMap" parameterType="com.example.shirodemo.entity.User">
+    select userId, jobNumber, userName, realName, password, birthday, TIMESTAMPDIFF(YEAR,birthday,NOW()) age, entryTime,
+    address, phone, nation, email, identity, dimissiomTime, createTime, createUserId,
+    modifyTime, modifyUserId, userType,salary
+    from weixun_user
+    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+      <if test="jobnumber != null"> and jobNumber=#{jobnumber,jdbcType=VARCHAR}</if>
+      <if test="username != null"> and userName=#{username,jdbcType=VARCHAR}</if>
+      <if test="realname != null"> and realName=#{realname,jdbcType=VARCHAR}</if>
+      <if test="usertype != null"> and userType=#{usertype,jdbcType=INTEGER}</if>
+
+      <if test="birthdayStrStart != null">
+        and <![CDATA[ birthday >= #{birthdayStrStart,jdbcType=VARCHAR} ]]>
+      </if>
+      <if test="entrytimeStrStart != null">
+        and <![CDATA[ entrytime >= #{entrytimeStrStart,jdbcType=VARCHAR} ]]>
+      </if>
+      <if test="dimissiomtimeStrStart != null">
+        and <![CDATA[  dimissiomtime >= #{dimissiomtimeStrStart,jdbcType=VARCHAR} ]]>
+      </if>
+      <if test="createtimeStrStart != null">
+        and <![CDATA[ createtime >= #{createtimeStrStart,jdbcType=VARCHAR} ]]>
+      </if>
+
+
+      <if test="birthdayStrEnd != null">
+        and <![CDATA[ birthday <= #{birthdayStrEnd,jdbcType=VARCHAR} ]]>
+      </if>
+      <if test="entrytimeStrEnd != null">
+        and <![CDATA[ entrytime <= #{entrytimeStrEnd,jdbcType=VARCHAR} ]]>
+      </if>
+      <if test="dimissiomtimeStrEnd != null">
+        and <![CDATA[  dimissiomtime <= #{dimissiomtimeStrEnd,jdbcType=VARCHAR} ]]>
+      </if>
+      <if test="createtimeStrEnd != null">
+        and <![CDATA[ createtime <= #{createtimeStrEnd,jdbcType=VARCHAR} ]]>
+      </if>
+
+    </trim>
+  </select>
+  
+  <select id="everyMonthUserCount" resultType="java.util.Map">
+    SELECT COUNT(1) number,DATE_FORMAT(u.createTime,'%c-%d') rq FROM weixun_user u
+      <![CDATA[ WHERE DATE_FORMAT(u.createTime,'%Y-%m-%d') >= DATE_ADD(CURDATE(),INTERVAL -30 DAY)
+      AND DATE_FORMAT(u.createTime,'%Y-%m-%d') <= CURDATE() ]]>
+      GROUP BY DATE_FORMAT(u.createTime,'%Y-%m-%d')
+  </select>
+
+
+</mapper>
